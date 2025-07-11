@@ -1,0 +1,127 @@
+experimental :menu_main_15505_icon :/mnt/onboard/.adds/nm/.icon.png
+experimental :menu_main_15505_label :+Zuelow+
+experimental :menu_main_15505_enabled :1
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# MAIN MENU - Enhanced with more features
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+menu_item    : main                  : KOReader+            : cmd_spawn        :quiet       :exec /mnt/onboard/.adds/koreader/koreader.sh
+menu_item    : main                  : Dark Mode            : nickel_setting   : toggle     : dark_mode
+menu_item    : main                  : Screenshots          : nickel_setting   : toggle     : screenshots
+menu_item    : main                  : Import books         : nickel_misc      : rescan_books_full
+menu_item    : main                  : Reboot               : power            : reboot
+menu_item    : main                  : Shutdown             : power            : shutdown
+menu_item    : main                  : WiFi On/Off          : nickel_setting   : toggle     : force_wifi
+                                       chain_success        : nickel_wifi      : toggle
+menu_item    : main                  : USB Connect          : nickel_misc      : force_usb_connection
+menu_item    : main                  : Sleep                : power            : sleep
+menu_item    : main                  : IP Address           : cmd_output       : 2000:/sbin/ifconfig | /usr/bin/awk '/inet addr/{print substr($2,6)}'
+menu_item    : main                  : System Info          : cmd_output       : 3000:echo "Kernel: $(uname -r)\nFirmware: $(cat /mnt/onboard/.kobo/version)\nStorage: $(df -h /mnt/onboard | tail -1 | awk '{print $4 " free"}')"
+menu_item    : main                  : Lockscreen           : nickel_setting   : toggle     : lockscreen
+menu_item    : main                  : Auto USB Gadget      : nickel_setting   : toggle     : auto_usb_gadget
+menu_item    : main                  : Bluetooth            : nickel_bluetooth : toggle
+menu_item    : main                  : Beta Features        : nickel_open      : store:overdrive
+menu_item    : main                  : Force WiFi On        : nickel_setting   : toggle     : force_wifi
+
+# Generate KFMon items dynamically
+generator    : main                  : kfmon               : gui
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# READER MENU - Enhanced reading experience
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+menu_item    : reader                : Dark Mode            : nickel_setting   : toggle     : dark_mode
+menu_item    : reader                : Screenshots          : nickel_setting   : toggle     : screenshots
+menu_item    : reader                : Goodreads            : nickel_browser   : https://www.goodreads.com/book
+menu_item    : reader                : USB Connect          : nickel_misc      : force_usb_connection
+menu_item    : reader                : Invert Screen        : nickel_setting   : toggle     : invert
+menu_item    : reader                : Wikipedia            : nickel_browser   : modal:https://en.wikipedia.org
+menu_item    : reader                : Dictionary           : nickel_browser   : modal:https://www.merriam-webster.com
+menu_item    : reader                : Rotate Screen        : nickel_orientation : swap
+menu_item    : reader                : Invert Orientation   : nickel_orientation : invert
+menu_item    : reader                : Portrait Mode        : nickel_orientation : portrait
+menu_item    : reader                : Landscape Mode       : nickel_orientation : landscape
+menu_item    : reader                : Go Home              : nickel_misc      : home
+menu_item    : reader                : Reading Life         : nickel_open      : reading_life:stats
+menu_item    : reader                : My Words             : nickel_open      : reading_life:words
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# LIBRARY MENU - Enhanced organization
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+menu_item    : library               : Dark Mode            : nickel_setting   : toggle     : dark_mode
+menu_item    : library               : Screenshots          : nickel_setting   : toggle     : screenshots
+menu_item    : library               : Import books         : nickel_misc      : rescan_books_full
+menu_item    : library               : Reboot               : power            : reboot
+menu_item    : library               : Shutdown             : power            : shutdown
+menu_item    : library               : WiFi On/Off          : nickel_setting   : toggle     : force_wifi
+                                       chain_success        : nickel_wifi      : toggle
+menu_item    : library               : USB Connect          : nickel_misc      : force_usb_connection
+menu_item    : library               : My Books             : nickel_open      : library:all
+menu_item    : library               : Authors              : nickel_open      : library:authors
+menu_item    : library               : Series               : nickel_open      : library:series
+menu_item    : library               : Collections          : nickel_open      : library:shelves
+menu_item    : library               : Articles             : nickel_open      : library:pocket
+menu_item    : library               : Dropbox              : nickel_open      : library:dropbox
+menu_item    : library               : Google Drive         : nickel_open      : library:gdrive
+menu_item    : library               : Store Search         : nickel_open      : store:search
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# BROWSER MENU - Better web experience
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+menu_item    : browser               : Dark Mode            : nickel_setting   : toggle     : dark_mode
+menu_item    : browser               : Screenshots          : nickel_setting   : toggle     : screenshots
+menu_item    : browser               : Home                 : nickel_browser   : https://www.google.com
+menu_item    : browser               : Quit Browser         : nickel_misc      : home
+menu_item    : browser               : Project Gutenberg    : nickel_browser   : https://www.gutenberg.org
+menu_item    : browser               : Archive.org          : nickel_browser   : https://archive.org
+menu_item    : browser               : Wikipedia            : nickel_browser   : https://en.wikipedia.org
+menu_item    : browser               : MobileRead           : nickel_browser   : https://www.mobileread.com
+menu_item    : browser               : Open Pop-Up          : nickel_browser   : modal
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# SELECTION MENU - Context actions
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+menu_item    : selection             : Copy                 : cmd_output       : 1000:echo '{1||$}' > /mnt/onboard/.adds/clipboard.txt
+menu_item    : selection             : Note This            : dbg_toast        : Selection saved
+menu_item    : selection_search      : Search Google        : nickel_browser   : modal:https://www.google.com/search?q={1|S|%}
+menu_item    : selection_search      : Search DuckDuckGo    : nickel_browser   : modal:https://duckduckgo.com/?q={1|S|%}
+menu_item    : selection_search      : Define Word          : nickel_browser   : modal:https://www.merriam-webster.com/dictionary/{1|S|%}
+menu_item    : selection_search      : Wikipedia Search     : nickel_browser   : modal:https://en.wikipedia.org/wiki/{1|S|%}
+menu_item    : selection_search      : Translate (Google)   : nickel_browser   : modal:https://translate.google.com/?sl=auto&tl=en&text={1|S|%}
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# POWER USER TOOLS - Advanced features
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+menu_item    : main                  : === Tools ===        : dbg_msg          : Tools Section
+menu_item    : main                  : Telnet Server        : cmd_spawn        : quiet:/bin/mount -t devpts | /bin/grep -q /dev/pts || { /bin/mkdir -p /dev/pts && /bin/mount -t devpts devpts /dev/pts; }
+                                       chain_success        : cmd_spawn        : quiet:/usr/bin/pkill -f "^/usr/bin/tcpsvd -E 0.0.0.0 1023" || true && exec /usr/bin/tcpsvd -E 0.0.0.0 1023 /usr/sbin/telnetd -i -l /bin/login
+                                       chain_success        : dbg_toast        : Started Telnet server on port 1023
+menu_item    : main                  : FTP Server           : cmd_spawn        : quiet:/usr/bin/pkill -f "^/usr/bin/tcpsvd -E 0.0.0.0 1021" || true && exec /usr/bin/tcpsvd -E 0.0.0.0 1021 /usr/sbin/ftpd -w -t 30 /mnt/onboard
+                                       chain_success        : dbg_toast        : Started FTP server on port 1021
+menu_item    : main                  : Dump Syslog          : cmd_spawn        : logread > /mnt/onboard/.adds/syslog.log
+                                       chain_success        : dbg_toast        : Syslog saved to .adds/syslog.log
+menu_item    : main                  : Export Annotations   : cmd_spawn        : cp /mnt/onboard/.kobo/KoboReader.sqlite /mnt/onboard/.adds/annotations_backup.sqlite
+                                       chain_success        : dbg_toast        : Annotations backed up
+menu_item    : main                  : Clean Cache          : cmd_spawn        : rm -rf /mnt/onboard/.kobo-images/*
+                                       chain_success        : dbg_toast        : Image cache cleaned
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# BETA FEATURES - Games and extras
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+menu_item    : main                  : === Games ===        : dbg_msg          : Games Section
+menu_item    : main                  : Sketch Pad           : nickel_extras    : sketch_pad
+menu_item    : main                  : Solitaire            : nickel_extras    : solitaire
+menu_item    : main                  : Sudoku               : nickel_extras    : sudoku
+menu_item    : main                  : Word Scramble        : nickel_extras    : word_scramble
+menu_item    : main                  : Unblock It           : nickel_extras    : unblock_it
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# QUICK SETTINGS - Fast access to common settings
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+menu_item    : main                  : === Settings ===     : dbg_msg          : Settings Section
+menu_item    : main                  : Activity             : nickel_open      : reading_life:reading_life
+menu_item    : main                  : Awards               : nickel_open      : reading_life:awards
+menu_item    : main                  : Wishlist             : nickel_open      : discover:wishlist
+menu_item    : main                  : Store                : nickel_open      : discover:storefront
+menu_item    : main                  : WiFi Auto-Connect    : nickel_wifi      : autoconnect
+menu_item    : main                  : WiFi Silent Connect  : nickel_wifi      : autoconnect_silent
+menu_item    : main                  : Bluetooth Scan       : nickel_bluetooth : scan
